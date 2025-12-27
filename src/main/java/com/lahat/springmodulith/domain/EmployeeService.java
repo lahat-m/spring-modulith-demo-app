@@ -2,6 +2,7 @@ package com.lahat.springmodulith.domain;
 
 import com.lahat.springmodulith.domain.dtos.EmployeeRequest;
 import com.lahat.springmodulith.domain.dtos.EmployeeResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +25,21 @@ public class EmployeeService {
         return repository.findById(id)
                 .map(EmployeeMapper::toResponse);
     }
-    public EmployeeResponse createEmployee(EmployeeRequest response) {
-        EmployeeEntity entity = EmployeeMapper.toEntity(response);
+    public EmployeeResponse createEmployee(EmployeeRequest request) {
+        EmployeeEntity entity = EmployeeMapper.toEntity(request);
         return EmployeeMapper.toResponse(repository.save(entity));
+    }
+
+
+    public Optional<EmployeeResponse> updateEmployee(Long id, EmployeeRequest request) {
+        return repository.findById(id)
+                .map(employee -> {
+                    employee.setName(request.name());
+                    employee.setEmail(request.email());
+                    employee.setPhoneNumber(request.phoneNumber());
+                    employee.setAddress(request.address());
+                    EmployeeEntity savedEmployee = repository.save(employee);
+                    return EmployeeMapper.toResponse(savedEmployee);
+                });
     }
 }

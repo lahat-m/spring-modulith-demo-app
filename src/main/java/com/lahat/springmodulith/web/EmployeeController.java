@@ -23,19 +23,27 @@ class EmployeeController {
 
     //create API endpoint to retrieve employee list
     @GetMapping
-    List<EmployeeResponse> getAllEmployees(){
+    List<EmployeeResponse> getAllEmployees() {
         return service.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    Optional<EmployeeResponse> getEmployeeById(@PathVariable Long id){
+    Optional<EmployeeResponse> getEmployeeById(@PathVariable Long id) {
         return service.getEmployeeById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequest request){
+    ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequest request) {
         EmployeeResponse response = service.createEmployee(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequest request) {
+        return service.updateEmployee(id, request)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
