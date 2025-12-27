@@ -1,4 +1,4 @@
-package com.lahat.spring_modulith;
+package com.lahat.springmodulith;
 
 import org.springframework.boot.test.context.TestConfiguration;
 

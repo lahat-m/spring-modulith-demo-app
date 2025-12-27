@@ -1,4 +1,4 @@
-package com.lahat.spring_modulith;
+package com.lahat.springmodulith;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
